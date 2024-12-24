@@ -1,13 +1,14 @@
 import os
 import pandas as pd
 from dotenv import load_dotenv
+from urllib.parse import quote
 from sqlalchemy import create_engine
 
 # load the enviroment variables
 load_dotenv()
 
-DB_USER = os.environ.get("DB_USER", "")
-DB_PASSWORD = os.environ.get("DB_PASSWORD", "")
+DB_USER = quote(os.environ.get("DB_USER", ""))
+DB_PASSWORD = quote(os.environ.get("DB_PASSWORD", ""))
 DB_HOST = os.environ.get("DB_HOST", "")
 DB_PORT = os.environ.get("DB_PORT", "")
 DB_NAME = os.environ.get("DB_NAME", "")
@@ -32,7 +33,7 @@ def load_data_from_db() -> pd.DataFrame:
     """
     """Loads the data from the database to a pandas.DataFrame"""
     db_url = (
-        f"postgres+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+        f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
     )
 
     engine = create_engine(db_url)
